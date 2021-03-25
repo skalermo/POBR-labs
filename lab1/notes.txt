@@ -1,0 +1,10 @@
+Wybrany edytor grafiki rastrowej - Gimp v2.10.22
+
+Kaski
+Colors/Components/Channel Mixer - ustawiamy czerwoną składową w czerwonym kanale na max, pozostałe ustawiamy na 0.
+Colors/Brightness-Contrast - kontrast ustawiamy na max, jasność ustawiamy niższą.
+Colors/Threshold - ustawiamy tak, aby dostać czarno-biały obraz.
+
+Fotele
+Colors/Components/Channel Mixer - ustawiamy czerwoną składową we wszystkich kanałach na 0.
+Colors/Threshold - ustawiamy tak, aby dostać czarno-biały obraz.
