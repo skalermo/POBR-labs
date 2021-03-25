@@ -6,6 +6,7 @@ Steps to achieve images below are stored in the file [notes.txt](notes.txt).
 #### Helmets
 ![](assets/helmets2.JPG) | ![](assets/helmets2_processed.JPG)
 ---|---
+![](assets/helmets3.JPG) | ![](assets/helmets3_processed.JPG)
 
 #### Chairs
 ![](assets/chairs.JPG) | ![](assets/chairs_processed.JPG)
