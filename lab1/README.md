@@ -19,13 +19,13 @@ Steps to achieve images below are stored in the file [notes.txt](notes.txt).
 
 #### Program output
 ```
-Count of pixels with lightness in range     0 -  32:      0
-Count of pixels with lightness in range    32 -  64:   1922
-Count of pixels with lightness in range    64 -  96:  44226
-Count of pixels with lightness in range    96 - 128:  42167
-Count of pixels with lightness in range   128 - 160:  70026
-Count of pixels with lightness in range   160 - 192:  72611
-Count of pixels with lightness in range   192 - 224:  30356
-Count of pixels with lightness in range   224 - 256:    836
+Count of pixels with lightness in range     0 -  31:      0
+Count of pixels with lightness in range    32 -  63:   1922
+Count of pixels with lightness in range    64 -  95:  44226
+Count of pixels with lightness in range    96 - 127:  42167
+Count of pixels with lightness in range   128 - 159:  70026
+Count of pixels with lightness in range   160 - 191:  72611
+Count of pixels with lightness in range   192 - 223:  30356
+Count of pixels with lightness in range   224 - 255:    836
 Total pixel count: 262144
 ```
