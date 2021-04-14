@@ -1,5 +1,5 @@
 #include <vector>
-#include "RankFilter.h"
+#include "../include/RankFilter.h"
 
 
 RankFilter::RankFilter(int size, int mode) {

@@ -2,8 +2,8 @@
 #include "opencv2/highgui/highgui.hpp"
 
 #include <vector>
-#include "ConvFilter.h"
-#include "RankFilter.h"
+#include "../include/ConvFilter.h"
+#include "../include/RankFilter.h"
 
 int main() {
     cv::Mat image = cv::imread("../Lena.bmp");

@@ -1,4 +1,4 @@
-#include "BaseFilter.h"
+#include "../include/BaseFilter.h"
 
 void BaseFilter::apply(const cv::Mat &src, cv::Mat &dst) {
     dst = cv::Mat::zeros(src.rows, src.cols, src.type());
