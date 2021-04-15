@@ -1,5 +1,5 @@
-#ifndef POBR_LAB1_BASEFILTER_H
-#define POBR_LAB1_BASEFILTER_H
+#ifndef POBR_LAB2_BASEFILTER_H
+#define POBR_LAB2_BASEFILTER_H
 
 #include "opencv2/core.hpp"
 
@@ -14,4 +14,4 @@ public:
     void apply(const cv::Mat& src, cv::Mat& dst);
 };
 
-#endif //POBR_LAB1_BASEFILTER_H
+#endif //POBR_LAB2_BASEFILTER_H

@@ -1,5 +1,5 @@
-#ifndef POBR_LAB1_CONVFILTER_H
-#define POBR_LAB1_CONVFILTER_H
+#ifndef POBR_LAB2_CONVFILTER_H
+#define POBR_LAB2_CONVFILTER_H
 
 #include "BaseFilter.h"
 
@@ -15,4 +15,4 @@ public:
     void operate(const cv::Mat &src, cv::Mat &dst, cv::Vec2i uv) override;
 };
 
-#endif //POBR_LAB1_CONVFILTER_H
+#endif //POBR_LAB2_CONVFILTER_H
