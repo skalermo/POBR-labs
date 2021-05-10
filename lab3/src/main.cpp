@@ -2,7 +2,6 @@
 #include "opencv2/highgui/highgui.hpp"
 
 #include <vector>
-#include <deque>
 #include <tuple>
 #include <bits/stdc++.h>
 
@@ -66,7 +65,7 @@ bool isBorderPixel(int x, int y, const cv::Mat &image, const cv::Vec3b &targetCo
 void processBlackWhiteAndPrint(const std::string &filename) {
     cv::Mat image = cv::imread(filename);
     cv::Vec3b targetColor{0, 0, 0};
-    cv::Vec3b fillColor{0, 255, 0};
+    cv::Vec3b bgColor{0, 255, 0};
 
     std::vector<std::tuple<int, int>> targetPixels;
     int S = 0;
@@ -90,7 +89,7 @@ void processBlackWhiteAndPrint(const std::string &filename) {
     long double M_11_ = M_11(m_00, m_01, m_10, m_11);
     long double M_02_ = M_02(m_00, m_01, m_02);
     long double M_20_ = M_20(m_00, m_10, m_20);
-    // file, S, L, W3, M1, M7
+
     double W3_ = W3(L, S);
     long double M1_ = M1(M_02_, M_20_, m_00);
     long double M7_ = M7(M_11_, M_02_, M_20_, m_00);
@@ -102,9 +101,84 @@ void processBlackWhiteAndPrint(const std::string &filename) {
               << "M7=" << M7_ << std::endl;
 }
 
+void processArrowsAndPrint(const std::string &filename) {
+    cv::Mat image = cv::imread(filename);
+    cv::Vec3b bgColor{255, 255, 255};
+
+    std::vector<int> S(5, 0);
+    std::vector<int> L(5, 0);
+    std::vector<int> xmax(5, 0);
+    std::vector<int> xmin(5, image.cols);
+    std::vector<int> ymax(5, 0);
+    std::vector<int> ymin(5, image.rows);
+
+    std::vector<std::vector<std::tuple<int, int>>> targetPixels(5);
+    for (int y = 0; y < image.rows; ++y) {
+        for (int x = 0; x < image.cols; ++x) {
+            cv::Vec3b curPixel = image.at<cv::Vec3b>(x, y);
+            if (!areEqual(curPixel, bgColor)) {
+                // use the fact that we know exactly
+                // how red pixel value matches the arrows
+                int arrowNr = static_cast<int>(static_cast<double>(curPixel[2]) / 45);
+                targetPixels[arrowNr].emplace_back(x, y);
+                S[arrowNr]++;
+                if (isBorderPixel(x, y, image, curPixel))
+                    L[arrowNr]++;
+                if (xmax[arrowNr] < x)
+                    xmax[arrowNr] = x;
+                if (xmin[arrowNr] > x)
+                    xmin[arrowNr] = x;
+                if (ymax[arrowNr] < y)
+                    ymax[arrowNr] = y;
+                if (ymin[arrowNr] > y)
+                    ymin[arrowNr] = y;
+            }
+        }
+    }
+    std::cout << "File: " << filename << std::endl;
+    for (int k = 0; k < 5; k++) {
+        long m_00 = m(0, 0, targetPixels[k]);
+        long m_01 = m(0, 1, targetPixels[k]);
+        long m_10 = m(1, 0, targetPixels[k]);
+        long m_11 = m(1, 1, targetPixels[k]);
+        long m_02 = m(0, 2, targetPixels[k]);
+        long m_20 = m(2, 0, targetPixels[k]);
+        int xmid = (xmax[k] + xmin[k]) / 2;
+        int ymid = (ymax[k] + ymin[k]) / 2;
+        int i = static_cast<int>(m_10 / m_00);
+        int j = static_cast<int>(m_01 / m_00);
+
+        int dx = xmid - i;
+        int dy = ymid - j;
+        const double pi = 2 * acos(0.0);
+        double angle = atan2(dx, dy) * 180 / pi;
+
+        long double M_11_ = M_11(m_00, m_01, m_10, m_11);
+        long double M_02_ = M_02(m_00, m_01, m_02);
+        long double M_20_ = M_20(m_00, m_10, m_20);
+
+        double W3_ = W3(L[k], S[k]);
+        long double M1_ = M1(M_02_, M_20_, m_00);
+        long double M7_ = M7(M_11_, M_02_, M_20_, m_00);
+        std::cout << "Arrow R=:" << k*45 << ", "
+                  << "angle=" << angle << "deg, "
+                  << "S=" << S[k] << ", "
+                  << "L=" << L[k] << ", "
+                  << "W3=" << W3_ << ", "
+                  << "M1=" << M1_ << ", "
+                  << "M7=" << M7_ << std::endl;
+    }
+}
+
 void task1(const std::vector<std::string> &filenames) {
     for (const auto &filename : filenames) {
         processBlackWhiteAndPrint(filename);
+    }
+}
+
+void task2(const std::vector<std::string> &filenames) {
+    for (const auto &filename : filenames) {
+        processArrowsAndPrint(filename);
     }
 }
 
@@ -122,29 +196,11 @@ int main() {
             "../arrows/strzalki_2.dib",
     };
 
-//    std::cout << "Task1" << std::endl;
-//    task1(blackWhiteFiles);
-
-
+    std::cout << "Task1" << std::endl;
+    task1(blackWhiteFiles);
+    std::cout << "Task2" << std::endl;
+    task2(arrowFiles);
 
     cv::waitKey(-1);
     return 0;
 }
-
-
-//    // floodFill process starting from found pixel
-//    std::deque<std::tuple<int, int>> toFill;
-//    toFill.emplace_back(x0, y0);
-//    while (!toFill.empty()) {
-//        std::tuple<int, int> t = toFill.front();
-//        int x = std::get<0>(t);
-//        int y = std::get<1>(t);
-//        toFill.pop_front();
-//        cv::Vec3b curPixel = image.at<cv::Vec3b>(x, y);
-//        if (!(targetColor == curPixel))
-//            continue;
-//        image.at<cv::Vec3b>(x, y) = fillColor;
-//        toFill.emplace_back(x - 1, y);
-//        toFill.emplace_back(x + 1, y);
-//        toFill.emplace_back(x, y - 1);
-//        toFill.emplace_back(x, y + 1);
